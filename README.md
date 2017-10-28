@@ -24,8 +24,8 @@ Trabalho 1 da disciplina Organização e Recuperação da Informação, do Prof.
 
 Implementar:
 - [x] Criação de novo arquivo
-- [] Inserir novo registro
-- [] Buscar registro, dada uma chave
-- [] Remoção de um registro, dada uma chave
-- [] Listagem de registros
-- [] Compactação do arquivo
+- [ ] Inserir novo registro
+- [ ] Buscar registro, dada uma chave
+- [ ] Remoção de um registro, dada uma chave
+- [ ] Listagem de registros
+- [ ] Compactação do arquivo
