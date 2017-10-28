@@ -16,15 +16,16 @@ Trabalho 1 da disciplina Organização e Recuperação da Informação, do Prof.
 
     **Estrutura dos registros:**
     4 bytes - Chave (numérica, aleatória)
-    60 bytes - Conteúdo (letras, aleatórias)
+    60 bytes - Conteúdo (letras aleatórias)
+             - 6 campos de 10 bytes
 
 
-### To Do:
+## To Do:
 
-    Implementar:
-    [x] Criação de novo arquivo
-    [] Inserir novo registro
-    [] Buscar registro, dada uma chave
-    [] Remoção de um registro, dada uma chave
-    [] Listagem de registros
-    [] Compactação do arquivo
+Implementar:
+[x] Criação de novo arquivo
+[] Inserir novo registro
+[] Buscar registro, dada uma chave
+[] Remoção de um registro, dada uma chave
+[] Listagem de registros
+[] Compactação do arquivo
