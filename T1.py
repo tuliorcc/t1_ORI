@@ -21,7 +21,7 @@ def main_menu():
         elif (opcao == '2'):
             insere_registro()
         elif (opcao == '3'):
-            busca_registro()
+            input_busca()
         elif (opcao == '4'):
             remove_registro()
         elif (opcao == '5'):
@@ -57,15 +57,20 @@ def insere_registro():
     # Insere Registro
 
 
-def busca_registro():
+#Busca um registro (dividida em input_busca() e busca_registro())
+def input_busca():
     cls()
     print("### Busca de registro ###\n")
     chave_b = input('Digite a chave a ser buscada (4 números): ')
-    encontrou = False
+    busca_registro(chave_b)
+    input("\nPressione Enter para voltar ao menu principal.\n")
+
+
+def busca_registro(chave_b):
 
     with open('arqT1.dat', 'rb') as arquivo:
-
         fim_arquivo = False
+        encontrou = False
         while(not encontrou and not fim_arquivo):
             ponteiro = 0
             bloco_content = arquivo.read(512).decode('utf-8')  # Lê 1 bloco como uma string
@@ -79,21 +84,21 @@ def busca_registro():
                 if(chave_b == bloco_content[ponteiro:ponteiro+4]):  # verifica se chave é a chave buscada
                     encontrou = True
                     print("Registro {} encontrado.".format(chave_b))
+                    campos = []
                     for i in range(0,6):
                         inicio_campo = (ponteiro + 4) + (i * 10)
-                        conteudo_campo = bloco_content[inicio_campo:inicio_campo + 10]
-                        print("   Campo [{}]: {}".format(i + 1, conteudo_campo))
+                        campos[i] = bloco_content[inicio_campo:inicio_campo + 10]
+                    imprime_registro(chave_b, campos)
                     break
                 else:
                     ponteiro += 64 # se não encontrar, vai para o próximo registro
         if (not encontrou):
             print("\nChave não encontrada.")
-    input("\nPressione Enter para voltar ao menu principal.\n")
 
 
 def remove_registro():
     cls()
-    # Remove Registro
+    print("### Remoção de registro ###")
 
 
 # Lista os registros do arquivo
@@ -123,11 +128,12 @@ def lista_registros():
                     print("## Espaço vazio")
                 else:                                   # registro válido
                     chave = bloco_content[ponteiro:ponteiro+4]
-                    print("Registro [{}] - ".format(chave))     # Imprime chave
+                    campos = []
                     for i in range(0, 6):                       # imprime os 6 campos
                         inicio_campo = (ponteiro+4)+(i*10)
-                        conteudo_campo = bloco_content[inicio_campo:inicio_campo+10]
-                        print("   Campo [{}]: {}".format(i+1, conteudo_campo))
+                        campos[i] = bloco_content[inicio_campo:inicio_campo+10]
+                    imprime_registro(chave, campos)
+
                 print("\n")
 
                 ponteiro += 64  #próximo registro no bloco
@@ -146,6 +152,14 @@ def lista_registros():
 def compacta_arquivo():
     cls()
     # Compacta Arquivo
+
+
+# FUNÇÕES AUXILIARES
+
+def imprime_registro(chave,campos):
+    print("Registro [{}] - ".format(chave))  # Imprime chave
+    for i in range(0, 6):  # imprime os 6 campos
+        print("   Campo [{}]: {}".format(campos[i]))
 
 
 def cls():  # Função que limpa o console

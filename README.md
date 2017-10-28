@@ -26,8 +26,8 @@ Registros inválidos se iniciam com o caracter #
 ### cria_arquivo()
 Cria um novo arquivo arqT1.dat, sobrescrevendo caso já exista. O novo arquivo possui 100 registros gerados aleatoriamente.  
   
-### busca_registros()
-Pede a chave a ser buscada pelo usuário.  
+### input_busca() e busca_registros(chave) 
+input_busca() pede a chave a ser buscada pelo usuário e passa para busca_registros(chave).
 Abre o arquivo e lê um bloco por vez, salvando o bloco em uma string.  
 Varre o arquivo (bloco por bloco) procurando a chave.  
 Caso encontrada, imprime os campos do registro. Caso contrário, imprime uma mensagem informando o usuário que a 
