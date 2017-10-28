@@ -34,7 +34,6 @@ def main_menu():
             input("\nOpção inválida. Pressione Enter para continuar.")
 
 
-
 # Cria um arquivo vazio com 100 registros
 def cria_arquivo():
     cls()
@@ -48,7 +47,8 @@ def cria_arquivo():
                 reg.append(random.randrange(65, 90))  #conteúdo
             arquivo.write(bytes(reg))
 
-    print("Arquivo arqT1.dat criado, qualquer arquivo existente foi sobrescrito. 100 registros aleatórios foram adicionados.")
+    print("Arquivo arqT1.dat criado, qualquer arquivo existente foi sobrescrito. 100 registros aleatórios foram "
+          "adicionados.")
     input("Pressione Enter para continuar")
 
 
@@ -56,9 +56,11 @@ def insere_registro():
     cls()
     # Insere Registro
 
+
 def busca_registro():
     cls()
     # Busca Registro
+
 
 def remove_registro():
     cls()
@@ -102,13 +104,6 @@ def lista_registros():
                     opt = '2'  # volta pro while, mas imprime arquivo inteiro
                 elif (next == '2'):
                     opt = '3'  # sai do while, volta ao menu
-
-
-
-
-
-
-
 
 
 def compacta_arquivo():
