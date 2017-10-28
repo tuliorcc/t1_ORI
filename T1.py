@@ -59,7 +59,36 @@ def insere_registro():
 
 def busca_registro():
     cls()
-    # Busca Registro
+    print("### Busca de registro ###\n")
+    chave_b = input('Digite a chave a ser buscada (4 números): ')
+    encontrou = False
+
+    with open('arqT1.dat', 'rb') as arquivo:
+
+        fim_arquivo = False
+        while(not encontrou and not fim_arquivo):
+            ponteiro = 0
+            bloco_content = arquivo.read(512).decode('utf-8')  # Lê 1 bloco como uma string
+            if (len(bloco_content) < 512):      # verifica se bloco tem menos de 8 registros
+                fim_bloco = len(bloco_content)
+                fim_arquivo = True
+            else:
+                fim_bloco = 512
+
+            while (ponteiro < fim_bloco):
+                if(chave_b == bloco_content[ponteiro:ponteiro+4]):  # verifica se chave é a chave buscada
+                    encontrou = True
+                    print("Registro {} encontrado.".format(chave_b))
+                    for i in range(0,6):
+                        inicio_campo = (ponteiro + 4) + (i * 10)
+                        conteudo_campo = bloco_content[inicio_campo:inicio_campo + 10]
+                        print("   Campo [{}]: {}".format(i + 1, conteudo_campo))
+                    break
+                else:
+                    ponteiro += 64 # se não encontrar, vai para o próximo registro
+        if (not encontrou):
+            print("\nChave não encontrada.")
+    input("\nPressione Enter para voltar ao menu principal.\n")
 
 
 def remove_registro():
@@ -70,19 +99,25 @@ def remove_registro():
 # Lista os registros do arquivo
 def lista_registros():
     cls()
-    print("### Lista de registros do arquivo arqT1.dat ###\n")
+    print("### Lista de registros ###\n")
     opt = input("(1) - Por bloco \n(2) - Arquivo completo \n(Outro) - Voltar ao menu \n  >")
 
     with open('arqT1.dat', 'rb') as arquivo:
         num_bloco = 0
+        fim_arquivo = False
 
-        while (opt == '1' or opt == '2'):
+        while (opt == '1' or opt == '2' and fim_arquivo == False):
             bloco_content = arquivo.read(512).decode('utf-8')  # Lê 1 bloco como uma string
             num_bloco += 1
             print("> Bloco {}:".format(num_bloco))
             ponteiro = 0  # ponteiro que varre o bloco
+            if (len(bloco_content) < 512):      # verifica se bloco tem menos de 8 registros
+                fim_bloco = len(bloco_content)
+                fim_arquivo = True
+            else:
+                fim_bloco = 512
 
-            while (ponteiro < 512):  # varre os 6 registros do bloco
+            while (ponteiro < fim_bloco):  # varre os 6 registros do bloco
 
                 if (bloco_content[ponteiro] == '#'):    # registro vazio
                     print("## Espaço vazio")
@@ -104,6 +139,8 @@ def lista_registros():
                     opt = '2'  # volta pro while, mas imprime arquivo inteiro
                 elif (next == '2'):
                     opt = '3'  # sai do while, volta ao menu
+
+        input("\nPressione Enter para voltar ao menu principal.\n")
 
 
 def compacta_arquivo():
