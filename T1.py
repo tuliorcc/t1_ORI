@@ -66,6 +66,7 @@ def input_busca():
     if (found == -1):
         print("\nPonteiro não encontrado.")
     else:
+        print("Encontrado na posição "+str(found))
         imprime_registro(found)
     input("Pressione Enter para voltar ao menu principal.\n")
 
@@ -88,11 +89,6 @@ def busca_registro(chave_b):
             while (ponteiro < fim_bloco):
                 if(chave_b == bloco_content[ponteiro:ponteiro+4]):  # verifica se chave é a chave buscada
                     print("Registro {} encontrado.".format(chave_b))
-                    campos = []
-                    for i in range(0,6):
-                        inicio_campo = (ponteiro + 4) + (i * 10)
-                        campos[i] = bloco_content[inicio_campo:inicio_campo + 10]
-                    imprime_registro(posicao)
                     return posicao
                 else:
                     ponteiro += 64 # se não encontrar, vai para o próximo registro
@@ -134,11 +130,6 @@ def lista_registros():
                 if (bloco_content[ponteiro] == '#'):    # registro vazio
                     print("## Espaço vazio")
                 else:                                   # registro válido
-                    chave = bloco_content[ponteiro:ponteiro+4]
-                    campos = []
-                    for i in range(0, 6):                       # imprime os 6 campos
-                        inicio_campo = (ponteiro+4)+(i*10)
-                        campos[i] = bloco_content[inicio_campo:inicio_campo+10]
                     imprime_registro(posicao)
 
                 print("\n")
@@ -161,8 +152,7 @@ def compacta_arquivo():
     # Compacta Arquivo
 
 
-# FUNÇÕES AUXILIARES
-
+### FUNÇÕES AUXILIARES
 def imprime_registro(pos):
     with open('arqT1.dat', 'rb') as arquivo:
         arquivo.seek(pos)      #seta ponteiro na posicao recebida
@@ -170,7 +160,7 @@ def imprime_registro(pos):
         print("Registro [{}] - ".format(chave))  # Imprime chave
         for i in range(0, 6):  # imprime os 6 campos
             campo = arquivo.read(10).decode('utf-8')
-            print("   Campo [{}]: {}".format(campo))
+            print("   Campo [{}]: {}".format(i,campo))
 
 
 def cls():  # Função que limpa o console
