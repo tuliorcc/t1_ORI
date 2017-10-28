@@ -62,16 +62,21 @@ def input_busca():
     cls()
     print("### Busca de registro ###\n")
     chave_b = input('Digite a chave a ser buscada (4 números): ')
-    busca_registro(chave_b)
-    input("\nPressione Enter para voltar ao menu principal.\n")
+    found = busca_registro(chave_b)
+    if (found == -1):
+        print("\nPonteiro não encontrado.")
+    else:
+        imprime_registro(found)
+    input("Pressione Enter para voltar ao menu principal.\n")
 
 
 def busca_registro(chave_b):
 
     with open('arqT1.dat', 'rb') as arquivo:
         fim_arquivo = False
-        encontrou = False
-        while(not encontrou and not fim_arquivo):
+
+        posicao = 0
+        while(not fim_arquivo):
             ponteiro = 0
             bloco_content = arquivo.read(512).decode('utf-8')  # Lê 1 bloco como uma string
             if (len(bloco_content) < 512):      # verifica se bloco tem menos de 8 registros
@@ -82,23 +87,24 @@ def busca_registro(chave_b):
 
             while (ponteiro < fim_bloco):
                 if(chave_b == bloco_content[ponteiro:ponteiro+4]):  # verifica se chave é a chave buscada
-                    encontrou = True
                     print("Registro {} encontrado.".format(chave_b))
                     campos = []
                     for i in range(0,6):
                         inicio_campo = (ponteiro + 4) + (i * 10)
                         campos[i] = bloco_content[inicio_campo:inicio_campo + 10]
-                    imprime_registro(chave_b, campos)
-                    break
+                    imprime_registro(posicao)
+                    return posicao
                 else:
                     ponteiro += 64 # se não encontrar, vai para o próximo registro
-        if (not encontrou):
-            print("\nChave não encontrada.")
+                    posicao += 64
+        return -1
 
 
 def remove_registro():
     cls()
     print("### Remoção de registro ###")
+    chave = input("Informe a chave do registro que deseja remover: ")
+    busca_registro(chave)
 
 
 # Lista os registros do arquivo
@@ -110,6 +116,7 @@ def lista_registros():
     with open('arqT1.dat', 'rb') as arquivo:
         num_bloco = 0
         fim_arquivo = False
+        posicao = 0
 
         while (opt == '1' or opt == '2' and fim_arquivo == False):
             bloco_content = arquivo.read(512).decode('utf-8')  # Lê 1 bloco como uma string
@@ -132,12 +139,12 @@ def lista_registros():
                     for i in range(0, 6):                       # imprime os 6 campos
                         inicio_campo = (ponteiro+4)+(i*10)
                         campos[i] = bloco_content[inicio_campo:inicio_campo+10]
-                    imprime_registro(chave, campos)
+                    imprime_registro(posicao)
 
                 print("\n")
 
-                ponteiro += 64  #próximo registro no bloco
-
+                ponteiro += 64  # próximo registro no bloco
+                posicao += 64
 
             if (opt == '1'):   # fim do bloco
                 next = input("(1) - Mostrar arquivo completo. (2) - Voltar ao menu. (Outro) - Próximo\n")
@@ -156,10 +163,14 @@ def compacta_arquivo():
 
 # FUNÇÕES AUXILIARES
 
-def imprime_registro(chave,campos):
-    print("Registro [{}] - ".format(chave))  # Imprime chave
-    for i in range(0, 6):  # imprime os 6 campos
-        print("   Campo [{}]: {}".format(campos[i]))
+def imprime_registro(pos):
+    with open('arqT1.dat', 'rb') as arquivo:
+        arquivo.seek(pos)      #seta ponteiro na posicao recebida
+        chave = arquivo.read(4).decode('utf-8')
+        print("Registro [{}] - ".format(chave))  # Imprime chave
+        for i in range(0, 6):  # imprime os 6 campos
+            campo = arquivo.read(10).decode('utf-8')
+            print("   Campo [{}]: {}".format(campo))
 
 
 def cls():  # Função que limpa o console

@@ -39,6 +39,8 @@ Abre o arquivo e lê um bloco por vez, salvando o bloco em uma string de caracte
 Imprime os oito registros do bloco (chave e campos)  
 No caso da listagem por bloco, para a execução no fim de cada bloco, perguntando ao usuário se quer imprimir o próximo bloco, o arquivo inteiro ou voltar ao menu.
 
+### imprime_registro(pos)
+Recebe a posição do registro no arquivo e imprime sua chave e campos formatados.
 
 
 ## To Do:
