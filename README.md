@@ -1,13 +1,13 @@
 # t1_ORI
 Trabalho 1 da disciplina Organização e Recuperação da Informação, do Prof. Jander.
 
-####**Grupo:**
+#### **Grupo:**
     - Leonardo Henrique Tozzatto Volpe
     - Miguel Gonçalves Vieira
     - Túlio Ribeiro Cesar de Campos
 
 
-###Estrutura do arquivo:
+### Estrutura do arquivo:
 
     **Nome:** arqT1.dat
 
@@ -18,3 +18,13 @@ Trabalho 1 da disciplina Organização e Recuperação da Informação, do Prof.
     4 bytes - Chave (numérica, aleatória)
     60 bytes - Conteúdo (letras, aleatórias)
 
+
+### To Do:
+
+    Implementar:
+    [x] Criação de novo arquivo
+    [] Inserir novo registro
+    [] Buscar registro, dada uma chave
+    [] Remoção de um registro, dada uma chave
+    [] Listagem de registros
+    [] Compactação do arquivo
