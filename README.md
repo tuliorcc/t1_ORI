@@ -26,7 +26,7 @@ Registros inválidos se iniciam com o caracter #
 ### cria_arquivo()
 Cria um novo arquivo arqT1.dat, sobrescrevendo caso já exista. O novo arquivo possui 100 registros gerados aleatoriamente.  
   
-### lista_registros
+### lista_registros()
 Lista os registros do arquivo. Existem as opções de listagem por bloco ou por arquivo completo.  
 Abre o arquivo e lê um bloco por vez, salvando o bloco em uma string de caracteres.  
 Imprime os oito registros do bloco (chave e campos)  
