@@ -40,11 +40,7 @@ def cria_arquivo():
     with open('arqT1.dat', 'wb') as arquivo:
 
         for i in range(0, 101):     # 100 registros
-            reg = []
-            for j in range(0, 4):
-                reg.append(random.randrange(48, 58))   # chave numérica
-            for j in range(0, 60):
-                reg.append(random.randrange(65, 90))  # conteúdo
+            reg = gera_registro()
             arquivo.write(bytes(reg))
 
     print("Arquivo arqT1.dat criado, qualquer arquivo existente foi sobrescrito. 100 registros aleatórios foram "
@@ -52,9 +48,16 @@ def cria_arquivo():
     input("Pressione Enter para continuar")
 
 
+# Insere novo registro
 def insere_registro():
     cls()
-    # Insere Registro
+    print("### Inserir Registro ###")
+    reg = gera_registro()
+    print("\nRegistro aleatório gerado: ")      # gera registro aleatório reg a ser adicionado
+    print("    Chave [{}]".format(reg[0:4]))
+    for i in range(0,6):
+        print("        Chave [{}]: {}".format(i,reg[4+(i*10):14+(i*10)]))
+
 
 
 # Busca um registro
@@ -196,6 +199,17 @@ def imprime_registro(pos):
         for i in range(0, 6):  # imprime os 6 campos
             campo = arquivo.read(10).decode('utf-8')
             print("   Campo [{}]: {}".format(i,campo))
+
+
+# Gera um registro aleatório
+def gera_registro():
+    reg = []
+    for j in range(0, 4):
+        reg.append(random.randrange(48, 58))  # chave numérica
+    for j in range(0, 60):
+        reg.append(random.randrange(65, 90))  # conteúdo
+    return reg
+
 
 
 def cls():  # Função que limpa o console

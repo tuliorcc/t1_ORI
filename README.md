@@ -52,6 +52,10 @@ No caso da listagem por bloco, para a execução no fim de cada bloco, perguntan
 ### imprime_registro(pos)
 Recebe a posição do registro no arquivo e imprime sua chave e campos formatados.
 
+### gera_registro
+Gera um registro aleatório e retorna uma lista com os caracteres.
+
+
 
 ## To Do:
 
