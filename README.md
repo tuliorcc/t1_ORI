@@ -7,7 +7,7 @@ Trabalho 1 da disciplina Organização e Recuperação da Informação, do Prof.
     - Túlio Ribeiro Cesar de Campos
 
 
-### Estrutura do arquivo:
+## Estrutura do arquivo:
 
 **Nome:** arqT1.dat
 
