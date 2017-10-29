@@ -42,9 +42,9 @@ def cria_arquivo():
         for i in range(0, 101):     # 100 registros
             reg = []
             for j in range(0, 4):
-                reg.append(random.randrange(48, 58))   #chave numérica
+                reg.append(random.randrange(48, 58))   # chave numérica
             for j in range(0, 60):
-                reg.append(random.randrange(65, 90))  #conteúdo
+                reg.append(random.randrange(65, 90))  # conteúdo
             arquivo.write(bytes(reg))
 
     print("Arquivo arqT1.dat criado, qualquer arquivo existente foi sobrescrito. 100 registros aleatórios foram "
@@ -57,20 +57,21 @@ def insere_registro():
     # Insere Registro
 
 
-#Busca um registro (dividida em input_busca() e busca_registro())
+# Busca um registro
 def input_busca():
     cls()
     print("### Busca de registro ###\n")
     chave_b = input('Digite a chave a ser buscada (4 números): ')
     found = busca_registro(chave_b)
     if (found == -1):
-        print("\nPonteiro não encontrado.")
+        print("\nRegistro não encontrado.")
     else:
         print("Encontrado na posição "+str(found))
         imprime_registro(found)
     input("Pressione Enter para voltar ao menu principal.\n")
 
 
+# Busca o registro e retorna sua posição no arquivo
 def busca_registro(chave_b):
 
     with open('arqT1.dat', 'rb') as arquivo:
@@ -93,14 +94,52 @@ def busca_registro(chave_b):
                 else:
                     ponteiro += 64 # se não encontrar, vai para o próximo registro
                     posicao += 64
-        return -1
+        return -1  # retorna -1 caso não encontrado
 
 
+# Remove o primeiro registro encontrado com a chave buscada.
 def remove_registro():
     cls()
     print("### Remoção de registro ###")
     chave = input("Informe a chave do registro que deseja remover: ")
-    busca_registro(chave)
+    pos = busca_registro(chave)
+    if (pos == -1):
+        print("Registro não encontrado.")
+    else:
+        bloco = int(abs(pos/512))
+        pos_bloco  = int(pos - (512*(bloco)))
+        num_bloco = 0
+        fim_arquivo = False
+
+        #arq = open('arqT1.dat', 'rb')
+        #temp = open('temp.dat', 'wb+')  # cria arquivo temporário para substituição
+        with open('arqT1.dat', 'rb') as arq, open('temp.dat','wb') as temp:
+            while (not fim_arquivo):
+                bloco_content = arq.read(512).decode('utf-8')  # lê o bloco como string
+                if (len(bloco_content) < 512):
+                    fim_arquivo = True
+
+                if (bloco == num_bloco):   # se o registro está no bloco
+                    lista = list(bloco_content)
+                    lista[pos_bloco] = '#'          # invalida o registro na lista
+                    bloco_content = ''.join(lista)      # transforma de volta
+                    temp.write(bloco_content.encode('utf-8'))
+                else:
+                    temp.write(bloco_content.encode('utf-8'))  # senão só escreve o bloco
+                num_bloco += 1
+
+        with open('arqT1.dat', 'wb') as arq, open('temp.dat', 'rb') as temp:
+            fim_arquivo = False         # copia temp para arq
+            while (not fim_arquivo):
+                bloco = temp.read(512)
+                if (len(bloco) < 512):
+                    fim_arquivo = True
+                arq.write(bloco)
+
+
+        arq.close()
+        temp.close()
+        input("Registro apagado. Pressione Enter para continuar.")
 
 
 # Lista os registros do arquivo
@@ -126,14 +165,11 @@ def lista_registros():
                 fim_bloco = 512
 
             while (ponteiro < fim_bloco):  # varre os 6 registros do bloco
-
                 if (bloco_content[ponteiro] == '#'):    # registro vazio
                     print("## Espaço vazio")
                 else:                                   # registro válido
                     imprime_registro(posicao)
-
                 print("\n")
-
                 ponteiro += 64  # próximo registro no bloco
                 posicao += 64
 
@@ -152,7 +188,7 @@ def compacta_arquivo():
     # Compacta Arquivo
 
 
-### FUNÇÕES AUXILIARES
+# FUNÇÕES AUXILIARES
 def imprime_registro(pos):
     with open('arqT1.dat', 'rb') as arquivo:
         arquivo.seek(pos)      #seta ponteiro na posicao recebida
@@ -165,6 +201,7 @@ def imprime_registro(pos):
 
 def cls():  # Função que limpa o console
     os.system('cls' if os.name == 'nt' else 'clear')
+
 
 # PROGRAMA PRINCIPAL
 main_menu()
