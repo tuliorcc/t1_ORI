@@ -59,6 +59,6 @@ Implementar:
 - [x] Criação de novo arquivo
 - [ ] Inserir novo registro
 - [x] Buscar registro, dada uma chave
-- [ ] Remoção de um registro, dada uma chave
+- [x] Remoção de um registro, dada uma chave
 - [x] Listagem de registros
 - [ ] Compactação do arquivo
