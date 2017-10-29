@@ -66,7 +66,6 @@ def input_busca():
     if (found == -1):
         print("\nRegistro não encontrado.")
     else:
-        print("Encontrado na posição "+str(found))
         imprime_registro(found)
     input("Pressione Enter para voltar ao menu principal.\n")
 
@@ -89,7 +88,7 @@ def busca_registro(chave_b):
 
             while (ponteiro < fim_bloco):
                 if(chave_b == bloco_content[ponteiro:ponteiro+4]):  # verifica se chave é a chave buscada
-                    print("Registro {} encontrado.".format(chave_b))
+                    print("Registro {} encontrado (offset = {}).".format(chave_b,posicao))
                     return posicao
                 else:
                     ponteiro += 64 # se não encontrar, vai para o próximo registro
