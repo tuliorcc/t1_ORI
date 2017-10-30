@@ -61,6 +61,7 @@ def insercao():
         num = input("\n Informe o número de registros a serem inseridos: ")
         for i in range(0,int(num)):
             insere_registro()
+    input("\nPressione Enter para continuar.")
 
 
 # Insere novo registro
