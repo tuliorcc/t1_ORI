@@ -26,6 +26,9 @@ Registros inválidos se iniciam com o caracter #
 ### cria_arquivo()
 Cria um novo arquivo arqT1.dat, sobrescrevendo caso já exista. O novo arquivo possui 100 registros gerados aleatoriamente.  
   
+### insercao() 
+Chama a função insere_registro() n vezes, de acordo com a escolha do usuário.  
+  
 ### insere_registro()
 Gera um registro aleatório com gera_registro(). Em seguida, lê o arquivo bloco por bloco, procurando
 um espaço vazio, enquanto copia o arquivo para um arquivo temporário.   
@@ -76,3 +79,9 @@ Implementar:
 - [x] Remoção de um registro, dada uma chave
 - [x] Listagem de registros
 - [ ] Compactação do arquivo
+  
+  
+Extras:
+- [x] Inserção por lote
+- [ ] Comentar código de maneira mais clara
+- [ ] Otimizações em geral

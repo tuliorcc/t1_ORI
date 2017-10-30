@@ -11,7 +11,7 @@ def main_menu():
         print("  3 - Buscar Registro")
         print("  4 - Remover Registro")
         print("  5 - Listar Registros")
-        print("  6 - Compactar Arquivo")
+        print("  6 - Manutenção do Arquivo")
         print("\n  0 - Sair\n")
 
         opcao = input("  > ")
@@ -19,7 +19,7 @@ def main_menu():
         if (opcao == '1'):
             cria_arquivo()
         elif (opcao == '2'):
-            insere_registro()
+            insercao()
         elif (opcao == '3'):
             input_busca()
         elif (opcao == '4'):
@@ -46,6 +46,22 @@ def cria_arquivo():
     print("Arquivo arqT1.dat criado, qualquer arquivo existente foi sobrescrito. 100 registros aleatórios foram "
           "adicionados.")
     input("Pressione Enter para continuar")
+
+
+def insercao():
+    opt = 0
+    while (opt != 1 or opt != 2):
+        cls()
+        print("### Inserção de Registros ###")
+        print("\n(1) - Inserir 1 registro \n(2) - Inserção em lote \n\n   > ")
+        opt = input()
+    if (opt == 1):
+        insere_registro()
+    else:
+        num = input("\n Informe o número de registros a serem inseridos: ")
+        for i in range(0,num):
+            insere_registro()
+
 
 
 # Insere novo registro
@@ -245,7 +261,6 @@ def gera_registro():
     for j in range(0, 60):
         reg.append(random.randrange(65, 90))  # conteúdo
     return reg
-
 
 
 def cls():  # Função que limpa o console
