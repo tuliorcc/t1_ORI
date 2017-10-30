@@ -59,13 +59,17 @@ No caso da listagem por bloco, para a execução no fim de cada bloco, perguntan
 ### imprime_registro(pos)
 Recebe a posição do registro no arquivo e imprime sua chave e campos formatados.
 
-### gera_registro
+### gera_registro()
 Gera um registro aleatório e retorna uma lista com os caracteres.
 
+### compacta_arquivo()
+Lê o arquivo, bloco por bloco, à medida que salva os registros válidos em um arquivo temporário.
+Depois, passa o arquivo temporário para o principal e informa a quantidade de registros inválidos
+apagados e a quantidade de bytes que o arquivo diminuiu.
 
-*Obs.: Para a inserção e remoção de registros, um arquivo temporário auxiliar foi usado. A solução
-não é ótima em termos de uso de memória e tempo, mas foi a solução encontrada, visto que o python não
-consegue alterar bytes no meio do arquivo.*  
+*Obs.: Para a inserção e remoção de registros e a manutenção do arquivo, um arquivo temporário 
+auxiliar foi usado. A soluçãonão é ótima em termos de uso de memória e tempo, mas foi a solução 
+encontrada, visto que o python não consegue alterar bytes no meio do arquivo.*  
 *Seria melhor renomear o arquivo temporário ao invés de copiá-lo para o arquivo principal, mas resolvemos
 manter esta solução para não ser necessário o uso de bibliotecas extras.*
 
@@ -78,7 +82,7 @@ Implementar:
 - [x] Buscar registro, dada uma chave
 - [x] Remoção de um registro, dada uma chave
 - [x] Listagem de registros
-- [ ] Compactação do arquivo
+- [x] Compactação do arquivo
   
   
 Extras:

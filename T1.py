@@ -63,7 +63,6 @@ def insercao():
             insere_registro()
 
 
-
 # Insere novo registro
 def insere_registro():
     cls()
@@ -239,8 +238,48 @@ def lista_registros():
 
 def compacta_arquivo():
     cls()
-    # Compacta Arquivo
+    print("### Manutenção do arquivo ###")
+    print("\n ")
 
+    with open('arqT1.dat', 'rb') as arq, open('temp.dat', 'wb') as temp:
+        num_bloco = 0
+        fim_arquivo = False
+        posicao = 0
+        vazios = 0
+
+        while (not fim_arquivo):
+            # Lê bloco
+            bloco_content = arq.read(512).decode('utf-8')  # Lê 1 bloco como uma string
+            num_bloco += 1
+            ponteiro = 0  # ponteiro que varre o bloco
+            bloco_escrita = []
+            if (len(bloco_content) < 512):      # verifica se bloco tem menos de 8 registros
+                fim_bloco = len(bloco_content)
+                fim_arquivo = True
+            else:
+                fim_bloco = 512
+
+            # Varre bloco
+            while (ponteiro < fim_bloco):  # varre os 6 registros do bloco
+                if (bloco_content[ponteiro] != '#'):  # se o registro não é vazio
+                    bloco_escrita.append(bloco_content[ponteiro:ponteiro+64]) # copia o registro para bloco de escrita
+                else:
+                    vazios += 1
+                ponteiro += 64  # próximo registro no bloco
+                posicao += 64
+            bloco_escrita = ''.join(bloco_escrita)
+            temp.write(bloco_escrita.encode('utf-8'))  # escreve o bloco de registros válidos em temp
+
+    # Copia temp para arq
+    with open('arqT1.dat', 'wb') as arq, open('temp.dat', 'rb') as temp:
+        fim_arquivo = False         # copia temp para arq
+        while (not fim_arquivo):
+            bloco = temp.read(512)
+            if (len(bloco) < 512):
+                fim_arquivo = True
+            arq.write(bloco)
+
+    print("\n Foram apagados {} registros inválidos. O tamanho do arquivo diminuiu em {} bytes.".format(vazios, vazios*64))
 
 # FUNÇÕES AUXILIARES
 def imprime_registro(pos):
