@@ -71,7 +71,7 @@ manter esta solução para não ser necessário o uso de bibliotecas extras.*
 
 Implementar:
 - [x] Criação de novo arquivo
-- [ ] Inserir novo registro
+- [x] Inserir novo registro
 - [x] Buscar registro, dada uma chave
 - [x] Remoção de um registro, dada uma chave
 - [x] Listagem de registros
