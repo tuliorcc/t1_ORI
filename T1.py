@@ -54,10 +54,52 @@ def insere_registro():
     print("### Inserir Registro ###")
     reg = gera_registro()
     print("\nRegistro aleatório gerado: ")      # gera registro aleatório reg a ser adicionado
-    print("    Chave [{}]".format(reg[0:4]))
+    chave = bytes(reg[0:4]).decode('utf-8')
+    print("    Chave [{}]".format(chave))
     for i in range(0,6):
-        print("        Chave [{}]: {}".format(i,reg[4+(i*10):14+(i*10)]))
+        campo = bytes(reg[4+(i*10):14+(i*10)]).decode('utf-8')
+        print("        Campo [{}]: {}".format(i, campo))
 
+    with open('arqT1.dat', 'rb') as arq, open('temp.dat', 'wb') as temp:
+        inserido = False
+        num_bloco = 0
+        fim_arquivo = False
+        posicao = 0
+
+        while (not fim_arquivo):
+
+            # Lê bloco
+            bloco_content = arq.read(512).decode('utf-8')  # Lê 1 bloco como uma string
+            num_bloco += 1
+            ponteiro = 0  # ponteiro que varre o bloco
+            if (len(bloco_content) < 512):      # verifica se bloco tem menos de 8 registros
+                fim_bloco = len(bloco_content)
+                fim_arquivo = True
+            else:
+                fim_bloco = 512
+
+            # Varre bloco
+            while (ponteiro < fim_bloco):  # varre os 6 registros do bloco
+                if (bloco_content[ponteiro] == '#' and inserido == False):  # registro vazio e ainda nao foi inserido o novo
+                    inserido = True
+                    temp.write(bytes(reg))  # insere o registro
+                    print("Registro inserido na posição {} do arquivo.".format(posicao))
+                else:                                   # registro ocupado
+                    temp.write(bytes(bloco_content[ponteiro:ponteiro+64].encode('utf-8')))  # copia o registro existente
+                ponteiro += 64  # próximo registro no bloco
+                posicao += 64
+        if (not inserido):
+            temp.write(bytes(reg))  # insere no fim do arquivo se nao foi inserido até agora
+            print("Registro inserido no fim do arquivo.")
+
+    # Copia temp para arq
+    with open('arqT1.dat', 'wb') as arq, open('temp.dat', 'rb') as temp:
+        fim_arquivo = False         # copia temp para arq
+        while (not fim_arquivo):
+            bloco = temp.read(512)
+            if (len(bloco) < 512):
+                fim_arquivo = True
+            arq.write(bloco)
 
 
 # Busca um registro
@@ -113,8 +155,6 @@ def remove_registro():
         num_bloco = 0
         fim_arquivo = False
 
-        #arq = open('arqT1.dat', 'rb')
-        #temp = open('temp.dat', 'wb+')  # cria arquivo temporário para substituição
         with open('arqT1.dat', 'rb') as arq, open('temp.dat','wb') as temp:
             while (not fim_arquivo):
                 bloco_content = arq.read(512).decode('utf-8')  # lê o bloco como string
@@ -137,10 +177,6 @@ def remove_registro():
                 if (len(bloco) < 512):
                     fim_arquivo = True
                 arq.write(bloco)
-
-
-        arq.close()
-        temp.close()
         input("Registro apagado. Pressione Enter para continuar.")
 
 
