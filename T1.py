@@ -50,16 +50,16 @@ def cria_arquivo():
 
 def insercao():
     opt = 0
-    while (opt != 1 or opt != 2):
+    while (opt != '1' and opt != '2'):
         cls()
         print("### Inserção de Registros ###")
         print("\n(1) - Inserir 1 registro \n(2) - Inserção em lote \n\n   > ")
         opt = input()
-    if (opt == 1):
+    if (opt == '1'):
         insere_registro()
     else:
         num = input("\n Informe o número de registros a serem inseridos: ")
-        for i in range(0,num):
+        for i in range(0,int(num)):
             insere_registro()
 
 
