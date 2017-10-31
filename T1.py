@@ -37,7 +37,7 @@ def main_menu():
 # Cria um arquivo arqT1.dat contendo 100 registros aleatórios
 def cria_arquivo():
     cls()
-    with open('arqT1.dat', 'wb') as arquivo: # Cria/Abre o arquivo arqT1.dat em modo escrita binária
+    with open('arqT1.dat', 'wb') as arquivo:  # Cria/Abre o arquivo arqT1.dat em modo escrita binária
 
         for i in range(0, 100):            # 100 registros gerados aleatoriamente por gera_registro()
             reg = gera_registro()
@@ -54,13 +54,13 @@ def insere_registro():
     print("### Inserir Registro ###")
     num = input("\n Informe o número de registros a serem inseridos ou -1 para retornar: ")
     if(num != '-1'):
-        for i in range(0,int(num)):
+        for i in range(0, int(num)):
             reg = gera_registro()                   # Gera um registro aleatório de 64 bytes
             print("\nRegistro aleatório gerado: ")
-            chave = bytes(reg[0:4]).decode('utf-8') # chave recebe os primeiros 4 bytes gerados
+            chave = bytes(reg[0:4]).decode('utf-8')  # chave recebe os primeiros 4 bytes gerados
             print("    Chave [{}]".format(chave))
-            for i in range(0,6):
-                campo = bytes(reg[4+(i*10):14+(i*10)]).decode('utf-8') # campo recebe os últimos 60 bytes gerados
+            for j in range(0, 6):
+                campo = bytes(reg[4+(i*10):14+(i*10)]).decode('utf-8')  # campo recebe os últimos 60 bytes gerados
                 print("        Campo [{}]: {}".format(i, campo))
 
             # Abre o arquivo arqT1.dat em modo leitura binária e cria o arquivo temp.dat em modo escrita binária.
@@ -86,7 +86,8 @@ def insere_registro():
                     # Varre o bloco lido um registro por vez, copiando os registros para um arquivo temporário
                     # e inclui o registro novo no primeiro espaço vazio encontrado (pode ser no final)
                     while (ponteiro < fim_bloco):   # Enquanto o ponteiro não chegar ao fim do bloco
-                        if (bloco_content[ponteiro] == '#' and inserido == False):  # Encontrou registro vazio e o novo não foi inserido ainda
+                        if (bloco_content[ponteiro] == '#' and inserido == False):  # Encontrou registro vazio e o
+                                                                                    # novo não foi inserido ainda
                             inserido = True
                             temp.write(bytes(reg))  # Insere o novo registro no espaço encontrado
                             print("Registro inserido na posição {} do arquivo, referente ao bloco {}.".format(posicao, num_bloco))
@@ -143,7 +144,7 @@ def busca_registro(chave_b):
 
             while (ponteiro < fim_bloco):
                 if(chave_b == bloco_content[ponteiro:ponteiro+4]):  # Verifica se é a chave buscada
-                    print("Registro {} encontrado na posição {} do arquivo, referente ao bloco {}.".format(chave_b,posicao,num_bloco))
+                    print("Registro {} encontrado na posição {} do arquivo, referente ao bloco {}.".format(chave_b, posicao, num_bloco))
                     return posicao
                 else:
                     ponteiro += 64 # Não é a chave buscada: Pula 64 bytes até o próximo registro no bloco
