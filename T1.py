@@ -72,8 +72,8 @@ def insere_registro():
             print("    Chave [{}]".format(chave))
             for j in range(0, 6):
                 # campo recebe os últimos 60 bytes gerados
-                campo = bytes(reg[4 + (i * 10):14 + (i * 10)]).decode('utf-8')
-                print("        Campo [{}]: {}".format(i, campo))
+                campo = bytes(reg[4 + (j * 10):14 + (j * 10)]).decode('utf-8')
+                print("        Campo [{}]: {}".format(j, campo))
 
             # Abre o arquivo arqT1.dat em modo leitura binária e cria o arquivo temp.dat em modo escrita binária.
             # temp.dat será utilizado para copiar os registros atuais de arqT1.dat e inserir um novo
