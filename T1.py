@@ -75,8 +75,9 @@ def insere_registro():
                 campo = bytes(reg[4 + (i * 10):14 + (i * 10)]).decode('utf-8')
                 print("        Campo [{}]: {}".format(i, campo))
 
-            # Abre o arquivo arqT1.dat em modo leitura e escrita binária.
-            with open('arqT1.dat', 'r+b') as arq:
+            # Abre o arquivo arqT1.dat em modo leitura binária e cria o arquivo temp.dat em modo escrita binária.
+            # temp.dat será utilizado para copiar os registros atuais de arqT1.dat e inserir um novo
+            with open('arqT1.dat', 'rb') as arq, open('temp.dat', 'wb') as temp:
                 inserido = False        # Indica se o novo registro foi inserido
                 fim_arquivo = False     # Indica se a leitura chegou ao final do arquivo
                 num_bloco = 0           # Indica o número do bloco lido
@@ -104,7 +105,7 @@ def insere_registro():
                                                                                     # novo não foi inserido ainda
                             inserido = True
                             # Insere o novo registro no espaço encontrado
-                            arq.write(bytes(reg))
+                            temp.write(bytes(reg))
                             print("Registro inserido na posição {} do arquivo, referente ao bloco {}.".format(
                                 posicao, num_bloco))
                         # Registro encontrado (vazio ou não) será copiado para o arquivo temporário
